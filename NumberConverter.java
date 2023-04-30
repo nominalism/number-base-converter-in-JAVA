@@ -1,34 +1,67 @@
 import java.util.Scanner;
 
-public class NumberConverter {
+public class DecimalConverter {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter a decimal number: ");
         int decimalNumber = scanner.nextInt();
 
-        
-        System.out.println("1. Binary\n");
-        System.out.println("2. Hexadecimal\n");
-        System.out.println("3. Octal\n");
-        int choice = scanner.nextInt();
-        System.out.println("Choose the base you want to convert to:");
+        String binaryNumber = decimalToBinary(decimalNumber);
+        System.out.println("Binary equivalent: " + binaryNumber);
 
-        switch (choice) {
-            case 1:
-                String binaryNumber = Integer.toBinaryString(decimalNumber);
-                System.out.println("Binary equivalent: " + binaryNumber);
-                break;
-            case 2:
-                String hexNumber = Integer.toHexString(decimalNumber);
-                System.out.println("Hexadecimal equivalent: " + hexNumber);
-                break;
-            case 3:
-                String octalNumber = Integer.toOctalString(decimalNumber);
-                System.out.println("Octal equivalent: " + octalNumber);
-                break;
-            default:
-                System.out.println("Invalid choice!");
+        String hexNumber = decimalToHexadecimal(decimalNumber);
+        System.out.println("Hexadecimal equivalent: " + hexNumber);
+
+        String octalNumber = decimalToOctal(decimalNumber);
+        System.out.println("Octal equivalent: " + octalNumber);
+    }
+
+    public static String decimalToBinary(int decimal) {
+        String binary = "";
+        int quotient = decimal;
+
+        while (quotient != 0) {
+            int remainder = quotient % 2;
+            binary = remainder + binary;
+            quotient /= 2;
+        }
+
+        return binary;
+    }
+
+    public static String decimalToHexadecimal(int decimal) {
+        String hex = "";
+        int quotient = decimal;
+
+        while (quotient != 0) {
+            int remainder = quotient % 16;
+            char hexDigit = getHexDigit(remainder);
+            hex = hexDigit + hex;
+            quotient /= 16;
+        }
+
+        return hex;
+    }
+
+    public static String decimalToOctal(int decimal) {
+        String octal = "";
+        int quotient = decimal;
+
+        while (quotient != 0) {
+            int remainder = quotient % 8;
+            octal = remainder + octal;
+            quotient /= 8;
+        }
+
+        return octal;
+    }
+
+    public static char getHexDigit(int decimal) {
+        if (decimal < 10) {
+            return (char) ('0' + decimal);
+        } else {
+            return (char) ('A' + (decimal - 10));
         }
     }
 }
